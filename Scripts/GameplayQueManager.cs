@@ -32,11 +32,14 @@ namespace KimScor.GameplayTagSystem.GameplayQue
         }
 
 
-        public void PlayQue(GameplayTag tag, Vector3 position = default, Quaternion rotation = default)
+        public void PlayQue(GameplayTag tag, Vector3 position = default, Quaternion rotation = default, Vector3 scale = default)
         {
+            if (scale == default)
+                scale = Vector3.one;
+
             foreach (GameplayQue que in _Ques)
             {
-                if(que.TryPlayQue(tag, position, rotation))
+                if(que.TryPlayQue(tag, position, rotation, scale))
                 {
                     break;
                 }

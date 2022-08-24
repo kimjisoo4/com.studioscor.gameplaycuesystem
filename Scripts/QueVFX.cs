@@ -8,9 +8,11 @@ namespace KimScor.GameplayTagSystem.GameplayQue
     {
         [SerializeField] private ParticleSystem _Effect;
 
-        public override void Play(Vector3 position, Quaternion rotation)
+        public override void Play(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             ParticleSystem effect = Instantiate(_Effect, position, rotation);
+
+            effect.transform.localScale = scale;
 
             effect.Play();
         }
