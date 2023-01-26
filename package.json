@@ -1,6 +1,6 @@
 {
-  "name": "com.studioscor.gameplaytagsystem.gameplayquesystem",
+  "name": "com.studioscor.gameplayquesystem",
   "version": "0.0.1",
   "displayName": "StudioScor - GameplayQueSystem",
-  "description": "Gameplay Que System - StudioScor"
+  "description": "GameplayQueSystem - StudioScor"
 }

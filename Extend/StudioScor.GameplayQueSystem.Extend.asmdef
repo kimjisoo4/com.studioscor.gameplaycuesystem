@@ -1,0 +1,23 @@
+{
+    "name": "StudioScor.GameplayQueSystem.Extend",
+    "rootNamespace": "StudioScor.GameplayQueSystem",
+    "references": [
+        "GUID:c138d8ebb78020c4b8d81fd900c7ccce",
+        "GUID:0e56af4e027762c43b7508efc3b00495"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.studioscor.utilities",
+            "expression": "0.0.0",
+            "define": "SCOR_ENABLE_UTILITIES"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
 
-namespace KimScor.GameplayTagSystem.GameplayQue
+namespace StudioScor.GameplayQueSystem
 {
-    [CreateAssetMenu(menuName = "GAS/GameplayQue/QueFX/new VFX", fileName = "QFX_")]
+    [CreateAssetMenu(menuName = "GameplayQue/QueFX/new VFX", fileName = "QFX_")]
     public class QueVFX : QueFX
     {
         [SerializeField] private ParticleSystem _Effect;
 
-        public override void Play(Vector3 position, Quaternion rotation, Vector3 scale)
+        public override void PlayQue(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             ParticleSystem effect = Instantiate(_Effect, position, rotation);
 
@@ -18,3 +18,4 @@ namespace KimScor.GameplayTagSystem.GameplayQue
         }
     }
 }
+ 
