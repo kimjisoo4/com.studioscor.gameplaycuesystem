@@ -1,11 +1,10 @@
-#if SCOR_ENABLE_UTILITIES
 using UnityEngine;
 using StudioScor.Utilities;
 
 namespace StudioScor.GameplayQueSystem.Utilities
 {
-    [CreateAssetMenu(menuName ="StudioScor/GameplayQue/new PoolVFX", fileName = "VFX_")]
-    public class QuePoolVFX : QueFX
+    [CreateAssetMenu(menuName = "StudioScor/GameplayQue/QueFX/new PoolVFX", fileName = "VFX_Pool_")]
+    public class QuePoolVFX : QueFX, ISerializationCallbackReceiver
     {
         [SerializeField] private SimplePooledObject _Pooled;
         [SerializeField] private int _StartSize = 5;
@@ -30,17 +29,24 @@ namespace StudioScor.GameplayQueSystem.Utilities
             }
         }
 
+        public void OnAfterDeserialize()
+        {
+            _Pool = null;
+            _Container = null;
+        }
+
+        public void OnBeforeSerialize()
+        {
+        }
+
         public override void PlayQue(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             var item = GetItem;
 
-            item.transform.position = position;
-            item.transform.rotation = rotation;
+            item.SetPositionAndRotation(position, rotation);
             item.transform.localScale = scale;
 
             item.gameObject.SetActive(true);
         }
     }
 }
-
-#endif

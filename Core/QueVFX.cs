@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-
+﻿using System;
+using UnityEngine;
+using UnityEngine.Pool;
 
 namespace StudioScor.GameplayQueSystem
 {
-    [CreateAssetMenu(menuName = "GameplayQue/QueFX/new VFX", fileName = "QFX_")]
+    [CreateAssetMenu(menuName = "StudioScor/GameplayQue/QueFX/new VFX", fileName = "QFX_")]
     public class QueVFX : QueFX
     {
         [SerializeField] private ParticleSystem _Effect;
