@@ -39,6 +39,18 @@ namespace StudioScor.GameplayQueSystem.Utilities
         {
         }
 
+        public override void PlayQueAttached(Transform transform, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            var item = GetItem;
+
+            item.SetParent(transform);
+
+            item.SetLocalPositionAndRotation(position, rotation);
+            item.transform.localScale = scale;
+
+            item.gameObject.SetActive(true);
+        }
+
         public override void PlayQue(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             var item = GetItem;

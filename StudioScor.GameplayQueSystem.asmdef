@@ -2,7 +2,10 @@
     "name": "StudioScor.GameplayQueSystem",
     "rootNamespace": "StudioScor.GameplayQueSystem",
     "references": [
-        "GUID:0e56af4e027762c43b7508efc3b00495"
+        "GUID:0e56af4e027762c43b7508efc3b00495",
+        "GUID:21b0c8d1703a94250bfac916590cea4f",
+        "GUID:ea715009a4efd4c6cbc85be3ae097dd3",
+        "GUID:315d634a9ac6d460a9515f5a56be6311"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -11,6 +14,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.visualscripting",
+            "expression": "0.0.0",
+            "define": "SCOR_ENABLE_VISUALSCRIPTING"
+        }
+    ],
     "noEngineReferences": false
 }

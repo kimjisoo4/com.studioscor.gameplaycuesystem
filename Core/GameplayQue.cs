@@ -7,6 +7,13 @@ namespace StudioScor.GameplayQueSystem
     {
         [SerializeField] private QueFX[] _QueFXs;
 
+        public void PlayQueAttached(Transform transform, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            foreach (QueFX fX in _QueFXs)
+            {
+                fX.PlayQueAttached(transform, position, rotation, scale);
+            }
+        }
         public void PlayQue(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             foreach (QueFX fX in _QueFXs)
