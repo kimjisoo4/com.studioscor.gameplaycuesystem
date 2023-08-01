@@ -4,39 +4,37 @@ using StudioScor.Utilities;
 namespace StudioScor.GameplayQueSystem.Utilities
 {
     [CreateAssetMenu(menuName = "StudioScor/GameplayQue/QueFX/new PoolVFX", fileName = "VFX_Pool_")]
-    public class QuePoolVFX : QueFX, ISerializationCallbackReceiver
+    public class QuePoolVFX : QueFX
     {
-        [SerializeField] private SimplePooledObject _Pooled;
-        [SerializeField] private int _StartSize = 5;
+        [SerializeField] private SimplePooledObject pooled;
+        [SerializeField] private int startSize = 5;
 
-        private SimplePool _Pool;
-        private Transform _Container;
+        private SimplePool pool;
+        private Transform container;
 
         public SimplePooledObject GetItem
         {
             get
             {
-                if (!_Container)
+                if (!container)
                 {
                     var container = new GameObject(name);
 
-                    _Container = container.transform;
+                    this.container = container.transform;
 
-                    _Pool = new(_Pooled, _Container, _StartSize);
+                    pool = new(pooled, this.container, startSize);
                 }
 
-                return _Pool.Get();
+                return pool.Get();
             }
         }
 
-        public void OnAfterDeserialize()
+        protected override void OnReset()
         {
-            _Pool = null;
-            _Container = null;
-        }
+            base.OnReset();
 
-        public void OnBeforeSerialize()
-        {
+            pool = null;
+            container = null;
         }
 
         public override void PlayQueAttached(Transform transform, Vector3 position, Quaternion rotation, Vector3 scale)

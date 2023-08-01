@@ -7,11 +7,11 @@ namespace StudioScor.GameplayQueSystem
     [CreateAssetMenu(menuName = "StudioScor/GameplayQue/QueFX/new VFX", fileName = "QFX_")]
     public class QueVFX : QueFX
     {
-        [SerializeField] private ParticleSystem _Effect;
+        [SerializeField] private ParticleSystem effect;
 
         public override void PlayQueAttached(Transform transform, Vector3 position, Quaternion rotation, Vector3 scale)
         {
-            ParticleSystem effect = Instantiate(_Effect, position, rotation, transform);
+            ParticleSystem effect = Instantiate(this.effect, position, rotation, transform);
 
             effect.transform.localScale = scale;
 
@@ -21,7 +21,7 @@ namespace StudioScor.GameplayQueSystem
 
         public override void PlayQue(Vector3 position, Quaternion rotation, Vector3 scale)
         {
-            ParticleSystem effect = Instantiate(_Effect, position, rotation);
+            ParticleSystem effect = Instantiate(this.effect, position, rotation);
 
             effect.transform.localScale = scale;
 
