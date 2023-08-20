@@ -6,6 +6,7 @@ namespace StudioScor.GameplayQueSystem.Utilities
     [CreateAssetMenu(menuName = "StudioScor/GameplayQue/QueFX/new PoolVFX", fileName = "VFX_Pool_")]
     public class QuePoolVFX : QueFX
     {
+        [Header(" [ Que Pool VFX ] ")]
         [SerializeField] private SimplePooledObject pooled;
         [SerializeField] private int startSize = 5;
 
