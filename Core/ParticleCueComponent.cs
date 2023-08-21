@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace StudioScor.GameplayQueSystem
+namespace StudioScor.GameplayCueSystem
 {
-    [AddComponentMenu("StudioScor/GameplayQue/Particle Que Component")]
-    public class ParticleQueComponent : QueComponent
+    [AddComponentMenu("StudioScor/GameplayCue/Particle Cue Component")]
+    public class ParticleCueComponent : GameplayCueComponent
     {
         [Header(" [ Particle Que ] ")]
         [SerializeField] private ParticleSystem particle;
@@ -14,6 +14,12 @@ namespace StudioScor.GameplayQueSystem
             particle = GetComponentInChildren<ParticleSystem>();
 #endif
         }
+
+        private void OnDisable()
+        {
+            Finish();
+        }
+
         public override void Pause()
         {
             var main = particle.main;
@@ -29,6 +35,12 @@ namespace StudioScor.GameplayQueSystem
         }
         public override void Play()
         {
+            if (Cue.AttachTarget)
+                transform.SetParent(Cue.AttachTarget);
+
+            transform.SetLocalPositionAndRotation(Cue.StartPosition, Cue.StartRotation);
+            transform.localScale = Cue.StartScale;
+
             if (!particle.main.playOnAwake)
                 particle.Play();
         }

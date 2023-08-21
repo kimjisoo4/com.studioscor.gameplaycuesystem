@@ -1,6 +1,6 @@
 {
-  "name": "com.studioscor.gameplayquesystem",
-  "version": "0.0.1",
-  "displayName": "StudioScor - GameplayQueSystem",
-  "description": "GameplayQueSystem - StudioScor"
+  "name": "com.studioscor.gameplaycuesystem",
+  "version": "0.0.2",
+  "displayName": "StudioScor - GameplayCueSystem",
+  "description": "GameplayCueSystem - StudioScor"
 }

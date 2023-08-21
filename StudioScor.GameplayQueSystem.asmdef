@@ -1,6 +1,6 @@
 {
-    "name": "StudioScor.GameplayQueSystem",
-    "rootNamespace": "StudioScor.GameplayQueSystem",
+    "name": "StudioScor.GameplayCueSystem",
+    "rootNamespace": "StudioScor.GameplayCueSystem",
     "references": [
         "GUID:0e56af4e027762c43b7508efc3b00495",
         "GUID:21b0c8d1703a94250bfac916590cea4f",

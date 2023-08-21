@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace StudioScor.GameplayQueSystem
+namespace StudioScor.GameplayCueSystem
 {
-    [AddComponentMenu("StudioScor/GameplayQue/Sound Que Component")]
-    public class SoundQueComponent : QueComponent
+    [AddComponentMenu("StudioScor/GameplayCue/Sound Cue Component")]
+    public class SoundCueComponent : GameplayCueComponent
     {
         [Header(" [ Sound Que Component ] ")]
         [SerializeField] private AudioSource audioSource;

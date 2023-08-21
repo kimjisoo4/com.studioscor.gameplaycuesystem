@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 
-namespace StudioScor.GameplayQueSystem
+namespace StudioScor.GameplayCueSystem
 {
     [System.Serializable]
-    public struct FGameplayQue
+    public struct FGameplayCue
     {
-        public GameplayQue Que;
+        public GameplayCue Cue;
         public Vector3 Position;
         public Vector3 Rotation;
         public float Scale;
 
-        public FGameplayQue(GameplayQue que, Vector3 position, Vector3 rotation, float scale)
+        public FGameplayCue(GameplayCue que, Vector3 position, Vector3 rotation, float scale)
         {
-            Que = que;
+            Cue = que;
             Position = position;
             Rotation = rotation;
             Scale = scale;
