@@ -18,13 +18,7 @@ namespace StudioScor.GameplayCueSystem.Utilities
             get
             {
                 if (!container)
-                {
-                    var container = new GameObject(name);
-
-                    this.container = container.transform;
-
-                    pool = new(pooled, this.container, startSize);
-                }
+                    CreatePool();
 
                 return pool.Get();
             }
@@ -38,9 +32,29 @@ namespace StudioScor.GameplayCueSystem.Utilities
             container = null;
         }
 
+        private void CreatePool()
+        {
+            var container = new GameObject(name);
+
+            this.container = container.transform;
+
+            pool = new(pooled, this.container, startSize);
+        }
+
+        public override void Initialization()
+        {
+            base.Initialization();
+
+            if (!container)
+                CreatePool();
+        }
+
+
         public override GameplayCueComponent GetCue()
         {
             return GetItem.GetComponent<GameplayCueComponent>();
         }
+
+        
     }
 }

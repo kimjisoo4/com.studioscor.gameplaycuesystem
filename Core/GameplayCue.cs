@@ -5,7 +5,7 @@ using System;
 
 namespace StudioScor.GameplayCueSystem
 {
-    [CreateAssetMenu(menuName ="StudioScor/GameplayQue/new GameplayCue", fileName = "Cue_")]
+    [CreateAssetMenu(menuName ="StudioScor/GameplayCue/new GameplayCue", fileName = "Cue_")]
     public class GameplayCue : BaseScriptableObject
     {
         [Header(" [ Gameplay Que ] ")]
@@ -18,7 +18,7 @@ namespace StudioScor.GameplayCueSystem
             get
             {
                 if (cuePool is null)
-                    cuePool = new ObjectPool<Cue>(Create);
+                    CreatePool();
 
                 return cuePool;
             }
@@ -30,14 +30,32 @@ namespace StudioScor.GameplayCueSystem
 
             cuePool = null;
         }
+        private void CreatePool()
+        {
+            Log(" Create Pool ");
+
+            cuePool = new ObjectPool<Cue>(Create);
+        }
 
         private Cue Create()
         {
-            Log(" Create ");
+            Log(" Create New Cue ");
 
             return new Cue(cuePool);
         }
 
+        public void Initialization()
+        {
+            Log("Initialization GameplayCue");
+
+            if (cuePool is null)
+                CreatePool();
+
+            foreach (var queFX in queFXs)
+            {
+                queFX.Initialization();
+            }
+        }
 
         public Cue GetCue()
         {

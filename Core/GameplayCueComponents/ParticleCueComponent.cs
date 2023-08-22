@@ -35,9 +35,6 @@ namespace StudioScor.GameplayCueSystem
         }
         public override void Play()
         {
-            if (Cue.AttachTarget)
-                transform.SetParent(Cue.AttachTarget);
-
             transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
             transform.localScale = Cue.Scale;
 
@@ -47,7 +44,7 @@ namespace StudioScor.GameplayCueSystem
 
         public override void Stop()
         {
-            particle.Stop();
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
     }
 }

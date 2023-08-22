@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Pool;
+using static UnityEngine.GraphicsBuffer;
 
 namespace StudioScor.GameplayCueSystem
 {
@@ -10,7 +11,8 @@ namespace StudioScor.GameplayCueSystem
         public readonly ObjectPool<Cue> pool;
 
         public Transform AttachTarget { get; set; }
-        public Transform Target { get; set; }
+        public Transform StartTarget { get; set; }
+        public Transform EndTarget { get; set; }
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Scale { get; set; }
@@ -32,9 +34,15 @@ namespace StudioScor.GameplayCueSystem
         private void Release()
         {
             AttachTarget = null;
+            StartTarget = null;
+            EndTarget = null;
+
             Position = default;
             Rotation = default;
             Scale = Vector3.one;
+
+            EndPosition = default;
+            Duration = default;
 
             pool.Release(this);
         }
@@ -48,9 +56,6 @@ namespace StudioScor.GameplayCueSystem
 
         public void Remove(GameplayCueComponent cueComponent)
         {
-            if (cueComponent.Cue == this)
-                cueComponent.Cue = null;
-
             instanceCues.Remove(cueComponent);
 
             if (instanceCues.Count == 0)
@@ -61,7 +66,12 @@ namespace StudioScor.GameplayCueSystem
         {
             foreach (var cue in instanceCues)
             {
+                if (AttachTarget)
+                    cue.transform.parent = AttachTarget;
+
                 cue.Play();
+
+                cue.gameObject.SetActive(true);
             }
         }
         public void Pause()
