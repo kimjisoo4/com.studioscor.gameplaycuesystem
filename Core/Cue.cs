@@ -9,10 +9,13 @@ namespace StudioScor.GameplayCueSystem
         private readonly List<GameplayCueComponent> instanceCues = new();
         public readonly ObjectPool<Cue> pool;
 
-        public Transform AttachTarget;
-        public Vector3 StartPosition;
-        public Quaternion StartRotation;
-        public Vector3 StartScale;
+        public Transform AttachTarget { get; set; }
+        public Transform Target { get; set; }
+        public Vector3 Position { get; set; }
+        public Quaternion Rotation { get; set; }
+        public Vector3 Scale { get; set; }
+        public Vector3 EndPosition { get; set; }
+        public float Duration { get; set; }
 
         public Cue(ObjectPool<Cue> pool)
         {
@@ -29,9 +32,9 @@ namespace StudioScor.GameplayCueSystem
         private void Release()
         {
             AttachTarget = null;
-            StartPosition = default;
-            StartRotation = default;
-            StartScale = Vector3.one;
+            Position = default;
+            Rotation = default;
+            Scale = Vector3.one;
 
             pool.Release(this);
         }

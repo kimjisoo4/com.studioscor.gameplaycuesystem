@@ -14,9 +14,9 @@ namespace StudioScor.GameplayCueSystem
             var cue = gameplayCue.GetCue();
 
             cue.AttachTarget = transform;
-            cue.StartPosition = localPosition;
-            cue.StartRotation = rotation;
-            cue.StartScale = scale;
+            cue.Position = localPosition;
+            cue.Rotation = rotation;
+            cue.Scale = scale;
 
             cue.Play();
 
@@ -31,9 +31,9 @@ namespace StudioScor.GameplayCueSystem
             var cue = gameplayCue.Cue.GetCue();
 
             cue.AttachTarget = transform;
-            cue.StartPosition = position;
-            cue.StartRotation = rotation;
-            cue.StartScale = scale;
+            cue.Position = position;
+            cue.Rotation = rotation;
+            cue.Scale = scale;
 
             cue.Play();
 
@@ -49,9 +49,9 @@ namespace StudioScor.GameplayCueSystem
 
             var cue = gameplayCue.GetCue();
 
-            cue.StartPosition = position;
-            cue.StartRotation = cueRotation;
-            cue.StartScale = cueScale;
+            cue.Position = position;
+            cue.Rotation = cueRotation;
+            cue.Scale = cueScale;
 
             cue.Play();
 
@@ -65,9 +65,9 @@ namespace StudioScor.GameplayCueSystem
 
             var cue = gameplayCue.Cue.GetCue();
 
-            cue.StartPosition = position;
-            cue.StartRotation = rotation;
-            cue.StartScale = scale;
+            cue.Position = position;
+            cue.Rotation = rotation;
+            cue.Scale = scale;
 
             cue.Play();
 
@@ -85,9 +85,9 @@ namespace StudioScor.GameplayCueSystem
 
             var cue = gameplayCue.Cue.GetCue();
 
-            cue.StartPosition = position;
-            cue.StartRotation = rotation;
-            cue.StartScale = scale;
+            cue.Position = position;
+            cue.Rotation = rotation;
+            cue.Scale = scale;
 
             cue.Play();
 
@@ -105,9 +105,9 @@ namespace StudioScor.GameplayCueSystem
 
             var cue = gameplayCue.GetCue();
 
-            cue.StartPosition = position;
-            cue.StartRotation = queRotation;
-            cue.StartScale = queScale;
+            cue.Position = position;
+            cue.Rotation = queRotation;
+            cue.Scale = queScale;
 
             cue.Play();
 

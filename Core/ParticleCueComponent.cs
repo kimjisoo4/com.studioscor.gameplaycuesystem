@@ -38,8 +38,8 @@ namespace StudioScor.GameplayCueSystem
             if (Cue.AttachTarget)
                 transform.SetParent(Cue.AttachTarget);
 
-            transform.SetLocalPositionAndRotation(Cue.StartPosition, Cue.StartRotation);
-            transform.localScale = Cue.StartScale;
+            transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+            transform.localScale = Cue.Scale;
 
             if (!particle.main.playOnAwake)
                 particle.Play();
