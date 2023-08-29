@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Pool;
-using static UnityEngine.GraphicsBuffer;
 
 namespace StudioScor.GameplayCueSystem
 {
