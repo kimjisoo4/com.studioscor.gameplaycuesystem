@@ -17,6 +17,7 @@ namespace StudioScor.GameplayCueSystem
         public Vector3 Scale { get; set; }
         public Vector3 EndPosition { get; set; }
         public float Duration { get; set; }
+        public bool IsPlaying { get; set; } 
 
         public Cue(ObjectPool<Cue> pool)
         {
@@ -32,6 +33,8 @@ namespace StudioScor.GameplayCueSystem
 
         private void Release()
         {
+            IsPlaying = false;
+
             AttachTarget = null;
             StartTarget = null;
             EndTarget = null;
@@ -63,6 +66,8 @@ namespace StudioScor.GameplayCueSystem
 
         public void Play()
         {
+            IsPlaying = true;
+
             foreach (var cue in instanceCues)
             {
                 if (AttachTarget)
@@ -82,6 +87,8 @@ namespace StudioScor.GameplayCueSystem
         }
         public void Stop()
         {
+            IsPlaying = false;
+
             foreach (var cue in instanceCues)
             {
                 cue.Stop();
