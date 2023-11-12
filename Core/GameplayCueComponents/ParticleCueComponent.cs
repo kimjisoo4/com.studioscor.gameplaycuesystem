@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-
 namespace StudioScor.GameplayCueSystem
 {
+
     [AddComponentMenu("StudioScor/GameplayCue/Particle Cue Component")]
     public class ParticleCueComponent : GameplayCueComponent
     {
-        [Header(" [ Particle Que ] ")]
+        [Header(" [ Particle Cue ] ")]
         [SerializeField] private ParticleSystem particle;
 
         private void Reset()
@@ -35,6 +35,9 @@ namespace StudioScor.GameplayCueSystem
         }
         public override void Play()
         {
+            if (Cue.AttachTarget)
+                transform.SetParent(Cue.AttachTarget);
+
             transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
             transform.localScale = Cue.Scale;
 
@@ -48,4 +51,3 @@ namespace StudioScor.GameplayCueSystem
         }
     }
 }
- 

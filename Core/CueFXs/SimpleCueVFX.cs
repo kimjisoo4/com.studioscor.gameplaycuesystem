@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace StudioScor.GameplayCueSystem
 {
-    [CreateAssetMenu(menuName = "StudioScor/GameplayCue/CueFX/new VFX", fileName = "VFX_")]
+    [CreateAssetMenu(menuName = "StudioScor/GameplayCue/CueFX/new Instantiate VFX", fileName = "VFX_")]
     public class SimpleCueVFX : CueFX
     {
         [Header(" [ Simple Cue VFX ] ")]

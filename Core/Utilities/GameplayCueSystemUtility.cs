@@ -16,7 +16,7 @@ namespace StudioScor.GameplayCueSystem
         {
             Vector3 position = gameplayCue.Position == default ? transformSpace.position : transformSpace.TransformPoint(gameplayCue.Position);
             Quaternion rotation = gameplayCue.Rotation == default ? transformSpace.rotation : transformSpace.rotation * Quaternion.Euler(gameplayCue.Rotation);
-            Vector3 scale = gameplayCue.Scale == default ? transformSpace.localScale : transformSpace.localScale * gameplayCue.Scale;
+            Vector3 scale = gameplayCue.Scale == default ? transformSpace.localScale : gameplayCue.Scale;
 
             var cue = gameplayCue.Cue.GetCue();
 
@@ -70,7 +70,7 @@ namespace StudioScor.GameplayCueSystem
 
             Vector3 position = gameplayCue.Position == default ? center : center + transform.TransformDirection(gameplayCue.Position);
             Quaternion rotation = gameplayCue.Rotation == default ? transform.rotation : transform.rotation * Quaternion.Euler(gameplayCue.Rotation);
-            Vector3 scale = gameplayCue.Scale == default ? transform.localScale : transform.localScale * gameplayCue.Scale;
+            Vector3 scale = gameplayCue.Scale == default ? transform.localScale : gameplayCue.Scale;
 
             var cue = gameplayCue.Cue.GetCue();
 
@@ -112,9 +112,6 @@ namespace StudioScor.GameplayCueSystem
             return cue;
         }
 
-
-
-
         /// <summary>
         /// 대상의 자식으로 Attach 하여 Play
         /// </summary>
@@ -124,7 +121,7 @@ namespace StudioScor.GameplayCueSystem
         public static Cue PlayAttached(this FGameplayCue gameplayCue, Transform attachTarget)
         {
             Quaternion rotation = gameplayCue.Rotation == default ? Quaternion.identity : Quaternion.Euler(gameplayCue.Rotation);
-            Vector3 scale = Vector3.one * gameplayCue.Scale;
+            Vector3 scale = gameplayCue.Scale;
 
             var cue = gameplayCue.Cue.GetCue();
 
