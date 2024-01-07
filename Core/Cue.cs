@@ -73,9 +73,9 @@ namespace StudioScor.GameplayCueSystem
                 if (AttachTarget)
                     cue.transform.parent = AttachTarget;
 
-                cue.Play();
-
                 cue.gameObject.SetActive(true);
+
+                cue.Play();
             }
         }
         public void Pause()
