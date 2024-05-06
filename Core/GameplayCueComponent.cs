@@ -11,7 +11,7 @@ namespace StudioScor.GameplayCueSystem
         /// </summary>
         public abstract void Play();
         /// <summary>
-        /// Cue 를 즉시 정지시킵니다.
+        /// Cue 를 정지시킵니다.
         /// </summary>
         public abstract void Stop();
 

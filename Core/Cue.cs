@@ -78,6 +78,19 @@ namespace StudioScor.GameplayCueSystem
                 cue.Play();
             }
         }
+        public void Detach()
+        {
+            if (!AttachTarget)
+                return;
+
+            foreach (var cue in instanceCues)
+            {
+                if (cue.transform.parent == AttachTarget)
+                {
+                    cue.transform.parent = null;
+                }
+            }
+        }
         public void Pause()
         {
             foreach (var cue in instanceCues)
