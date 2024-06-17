@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿#if SCOR_ENABLE_CINEMACHINE
+using UnityEngine;
 using Cinemachine;
 
 namespace StudioScor.GameplayCueSystem
 {
-#if SCOR_ENABLE_CINEMACHINE
     public class CinemachineImpulseCue : GameplayCueComponent
     {
         [Header(" [ Cinemachine Impulse Cue ] ")]
@@ -56,6 +56,6 @@ namespace StudioScor.GameplayCueSystem
         {
         }
     }
-#endif
 }
+#endif
  
