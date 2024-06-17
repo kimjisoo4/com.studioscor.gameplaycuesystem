@@ -17,7 +17,8 @@ namespace StudioScor.GameplayCueSystem
         public Vector3 Scale { get; set; }
         public Vector3 EndPosition { get; set; }
         public float Duration { get; set; }
-        public bool IsPlaying { get; set; } 
+        public bool IsPlaying { get; set; }
+        public bool UseStayWorldPosition { get; set; }
 
         public Cue(ObjectPool<Cue> pool)
         {
@@ -45,6 +46,8 @@ namespace StudioScor.GameplayCueSystem
 
             EndPosition = default;
             Duration = default;
+
+            UseStayWorldPosition = false;
 
             pool.Release(this);
         }

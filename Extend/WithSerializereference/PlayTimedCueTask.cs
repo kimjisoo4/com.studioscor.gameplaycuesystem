@@ -46,7 +46,8 @@ namespace StudioScor.GameplayCueSystem.Extend
         {
             base.ExitTask();
 
-            _spawnedCue.Stop();
+            if(_spawnedCue.IsPlaying)
+                _spawnedCue.Stop();
 
             if(_attach)
             {
@@ -76,7 +77,7 @@ namespace StudioScor.GameplayCueSystem.Extend
             {
                 if(normalizedTime >= _end)
                 {
-                    EndTask();
+                    _spawnedCue.Stop();
                 }
             }
         }   

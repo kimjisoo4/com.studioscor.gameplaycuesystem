@@ -29,7 +29,15 @@ namespace StudioScor.GameplayCueSystem
             if (Cue.AttachTarget)
                 transform.SetParent(Cue.AttachTarget);
 
-            transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+            if (Cue.UseStayWorldPosition)
+            {
+                transform.SetPositionAndRotation(Cue.Position, Cue.Rotation);
+            }
+            else
+            {
+                transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+            }
+
             audioSource.volume = defaultVolume * Cue.Scale.x;
 
             audioSource.Play();

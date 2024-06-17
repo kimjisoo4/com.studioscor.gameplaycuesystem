@@ -1,11 +1,34 @@
 ﻿using UnityEngine;
-using UnityEngine.UIElements;
 
 
 namespace StudioScor.GameplayCueSystem
 {
     public static class GameplayCueSystemUtility
     {
+        public static Cue Play(this FGameplayCue gameplayCue)
+        {
+            var cue = gameplayCue.Cue.GetCue();
+
+            cue.Position = gameplayCue.Position;
+            cue.Rotation = Quaternion.Euler(gameplayCue.Rotation);
+            cue.Scale = gameplayCue.Scale;
+
+            cue.Play();
+
+            return cue;
+        }
+        public static Cue Play(this GameplayCue gameplayCue, Vector3 position = default, Vector3 rotation = default, Vector3 scale = default)
+        {
+            var cue = gameplayCue.GetCue();
+
+            cue.Position = position;
+            cue.Rotation = Quaternion.Euler(rotation);
+            cue.Scale = scale;
+
+            cue.Play();
+
+            return cue;
+        }
         /// <summary>
         /// Target 을 중심으로 Offset 값을 적용하여 Play.
         /// </summary>
@@ -38,11 +61,11 @@ namespace StudioScor.GameplayCueSystem
         /// <param name="rotation"> Rotation Offset </param>
         /// <param name="scale"> new Scale </param>
         /// <returns></returns>
-        public static Cue PlayFromTarget(this GameplayCue gameplayCue, Transform transformSpace, Vector3 position = default, Vector3 rotation = default, float scale = 1f)
+        public static Cue PlayFromTarget(this GameplayCue gameplayCue, Transform transformSpace, Vector3 position = default, Vector3 rotation = default, Vector3 scale = default)
         {
             position = position == default ? transformSpace.position : transformSpace.TransformPoint(position);
             Quaternion cueRotation = rotation == default ? transformSpace.rotation : transformSpace.rotation * Quaternion.Euler(rotation);
-            Vector3 cueScale = scale == default ? transformSpace.localScale : transformSpace.localScale * scale;
+            Vector3 cueScale = scale == default ? transformSpace.localScale : scale;
 
             var cue = gameplayCue.GetCue();
 
@@ -118,7 +141,7 @@ namespace StudioScor.GameplayCueSystem
         /// <param name="gameplayCue">GameplayCue 와 Offset Value</param>
         /// <param name="attachTarget">Attach 할 대상</param>
         /// <returns></returns>
-        public static Cue PlayAttached(this FGameplayCue gameplayCue, Transform attachTarget)
+        public static Cue PlayAttached(this FGameplayCue gameplayCue, Transform attachTarget, bool useStayWorldPosition = false)
         {
             Quaternion rotation = gameplayCue.Rotation == default ? Quaternion.identity : Quaternion.Euler(gameplayCue.Rotation);
             Vector3 scale = gameplayCue.Scale;
@@ -130,7 +153,7 @@ namespace StudioScor.GameplayCueSystem
             cue.Position = gameplayCue.Position;
             cue.Rotation = rotation;
             cue.Scale = scale;
-
+            cue.UseStayWorldPosition = useStayWorldPosition;
             cue.Play();
 
             return cue;
@@ -141,22 +164,22 @@ namespace StudioScor.GameplayCueSystem
         /// </summary>
         /// <param name="gameplayCue">GameplayCue 와 Offset Value</param>
         /// <param name="attachTarget">Attach 할 대상</param>
-        /// <param name="localPosition"> Position Offset </param>
-        /// <param name="localRotation"> Rotation Offset </param>
-        /// <param name="localScale"> new Scale </param>
+        /// <param name="position"> Position Offset </param>
+        /// <param name="eulerRotation"> Rotation Offset </param>
+        /// <param name="scale"> new Scale </param>
         /// <returns></returns>
-        public static Cue PlayAttached(this GameplayCue gameplayCue, Transform attachTarget, Vector3 localPosition = default, Vector3 localRotation = default, float localScale = 1f)
+        public static Cue PlayAttached(this GameplayCue gameplayCue, Transform attachTarget, Vector3 position = default, Vector3 eulerRotation = default, Vector3 scale = default, bool useStayWorldPosition = false)
         {
-            Quaternion rotation = localRotation == default ? Quaternion.identity : Quaternion.Euler(localRotation);
-            Vector3 scale = Vector3.one * localScale;
+            Quaternion quaRotation = eulerRotation == default ? Quaternion.identity : Quaternion.Euler(eulerRotation);
 
             var cue = gameplayCue.GetCue();
 
             cue.AttachTarget = attachTarget;
             cue.StartTarget = attachTarget;
-            cue.Position = localPosition;
-            cue.Rotation = rotation;
+            cue.Position = position;
+            cue.Rotation = quaRotation;
             cue.Scale = scale;
+            cue.UseStayWorldPosition = useStayWorldPosition;
 
             cue.Play();
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace StudioScor.GameplayCueSystem.Extend
 {
+
     [Serializable]
     public class PlayCueTaskAction : TaskAction
     {

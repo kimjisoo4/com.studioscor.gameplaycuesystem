@@ -31,7 +31,15 @@ namespace StudioScor.GameplayCueSystem
 
             transform.SetParent(Cue.AttachTarget);
 
-            transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+            if (Cue.UseStayWorldPosition)
+            {
+                transform.SetPositionAndRotation(Cue.Position, Cue.Rotation);
+            }
+            else
+            {
+                transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+            }
+
             trailRenderer.widthMultiplier = Cue.Scale.x;
             trailRenderer.Clear();
         }
