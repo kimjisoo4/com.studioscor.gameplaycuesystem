@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using StudioScor.Utilities;
 using System.Collections.Generic;
-using UnityEngine.Pool;
+using UnityEngine;
 
 namespace StudioScor.GameplayCueSystem
 {
-    public class Cue
+    public class Cue : BaseClass
     {
-        private readonly List<GameplayCueComponent> instanceCues = new();
-        public readonly ObjectPool<Cue> pool;
+        public delegate void CueStateHandler(Cue cue);
+
+        private readonly List<GameplayCueComponent> _instanceCues = new();
+        public readonly GameplayCue GameplayCue;
 
         public Transform AttachTarget { get; set; }
         public Transform StartTarget { get; set; }
@@ -17,24 +19,42 @@ namespace StudioScor.GameplayCueSystem
         public Vector3 Scale { get; set; }
         public Vector3 EndPosition { get; set; }
         public float Duration { get; set; }
-        public bool IsPlaying { get; set; }
+        public bool IsPlaying { get; private set; }
+        public bool IsPaused { get; private set; }
+        public bool IsStopped { get; private set; }
         public bool UseStayWorldPosition { get; set; }
 
-        public Cue(ObjectPool<Cue> pool)
+        public event CueStateHandler OnStartedCue;
+        public event CueStateHandler OnStoppedCue;
+        public event CueStateHandler OnPausedCue;
+        public event CueStateHandler OnResumedCue;
+        public event CueStateHandler OnEndedCue;
+
+        public override bool UseDebug => GameplayCue.UseDebug;
+        public override Object Context => GameplayCue;
+
+        public Cue(GameplayCue gameplayCue)
         {
-            this.pool = pool;
+            GameplayCue = gameplayCue;
         }
 
         public void Clear()
         {
-            instanceCues.Clear();
+            _instanceCues.Clear();
 
             Release();
         }
 
         private void Release()
         {
+            if (!IsPlaying)
+                return;
+
+            Detach();
+
             IsPlaying = false;
+            IsStopped = false;
+            IsPaused = false;
 
             AttachTarget = null;
             StartTarget = null;
@@ -49,29 +69,43 @@ namespace StudioScor.GameplayCueSystem
 
             UseStayWorldPosition = false;
 
-            pool.Release(this);
+            Invoke_OnEndedCue();
+
+            OnStartedCue = null;
+            OnStoppedCue = null;
+            OnPausedCue = null;
+            OnResumedCue = null;
+            OnEndedCue = null;
+
+            GameplayCue.ReleaseCue(this);
         }
 
         public void Add(GameplayCueComponent cueComponent)
         {
             cueComponent.Cue = this;
 
-            instanceCues.Add(cueComponent);
+            _instanceCues.Add(cueComponent);
         }
 
         public void Remove(GameplayCueComponent cueComponent)
         {
-            instanceCues.Remove(cueComponent);
-
-            if (instanceCues.Count == 0)
-                Release();
+            if (_instanceCues.Remove(cueComponent))
+            {
+                if (_instanceCues.Count == 0)
+                {
+                    Release();
+                }
+            }
         }
 
         public void Play()
         {
+            if (IsPlaying)
+                return;
+
             IsPlaying = true;
 
-            foreach (var cue in instanceCues)
+            foreach (var cue in _instanceCues)
             {
                 if (AttachTarget)
                     cue.transform.parent = AttachTarget;
@@ -80,13 +114,15 @@ namespace StudioScor.GameplayCueSystem
 
                 cue.Play();
             }
+
+            Invoke_OnStartedCue();
         }
         public void Detach()
         {
             if (!AttachTarget)
                 return;
 
-            foreach (var cue in instanceCues)
+            foreach (var cue in _instanceCues)
             {
                 if (cue.transform.parent == AttachTarget)
                 {
@@ -96,26 +132,76 @@ namespace StudioScor.GameplayCueSystem
         }
         public void Pause()
         {
-            foreach (var cue in instanceCues)
+            if (!IsPlaying || IsPaused)
+                return;
+
+            IsPaused = true;
+
+            foreach (var cue in _instanceCues)
             {
                 cue.Pause();
             }
+
+            Invoke_OnPausedCue();
         }
         public void Stop()
         {
-            IsPlaying = false;
+            if (!IsPlaying || IsStopped)
+                return;
 
-            foreach (var cue in instanceCues)
+            IsStopped = true;
+
+            foreach (var cue in _instanceCues)
             {
                 cue.Stop();
             }
+
+            Invoke_OnStoppedCue();
         }
         public void Resume()
         {
-            foreach (var cue in instanceCues)
+            if (!IsPlaying || !IsPaused)
+                return;
+
+            IsPaused = false;
+
+            foreach (var cue in _instanceCues)
             {
                 cue.Resume();
             }
+
+            Invoke_OnResumedCue();
+        }
+
+        private void Invoke_OnStartedCue()
+        {
+            Log(nameof(OnStartedCue));
+
+            OnStartedCue?.Invoke(this);
+        }
+        private void Invoke_OnStoppedCue()
+        {
+            Log(nameof(OnStoppedCue));
+
+            OnStoppedCue?.Invoke(this);
+        }
+        private void Invoke_OnPausedCue()
+        {
+            Log(nameof(OnPausedCue));
+
+            OnPausedCue?.Invoke(this);
+        }
+        private void Invoke_OnResumedCue()
+        {
+            Log(nameof(OnResumedCue));
+
+            OnResumedCue?.Invoke(this);
+        }
+        private void Invoke_OnEndedCue()
+        {
+            Log(nameof(OnEndedCue));
+
+            OnEndedCue?.Invoke(this);
         }
     }
 }

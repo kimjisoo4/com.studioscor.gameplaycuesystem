@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StudioScor.Utilities;
+using UnityEngine;
 
 namespace StudioScor.GameplayCueSystem
 {
@@ -29,16 +30,20 @@ namespace StudioScor.GameplayCueSystem
             if (Cue.AttachTarget)
                 transform.SetParent(Cue.AttachTarget);
 
+            Vector3 position = Position;
+            Quaternion rotation = Rotation;
+            Vector3 scale = Scale;
+
             if (Cue.UseStayWorldPosition)
             {
-                transform.SetPositionAndRotation(Cue.Position, Cue.Rotation);
+                transform.SetPositionAndRotation(position, rotation);
             }
             else
             {
-                transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+                transform.SetLocalPositionAndRotation(position, rotation);
             }
 
-            audioSource.volume = defaultVolume * Cue.Scale.x;
+            audioSource.volume = defaultVolume * scale.x;
 
             audioSource.Play();
         }

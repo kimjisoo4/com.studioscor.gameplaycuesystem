@@ -1,10 +1,26 @@
 ﻿using StudioScor.Utilities;
+using UnityEngine;
 
 namespace StudioScor.GameplayCueSystem
 {
     public abstract class GameplayCueComponent : BaseMonoBehaviour
     {
+        private Vector3 _positionOffset;
+        private Quaternion _rotationOffset;
+        private Vector3 _scaleOffset;
+
         public Cue Cue { get; set; }
+
+        public void SetOffset(Vector3 position, Vector3 rotation, Vector3 scale)
+        {
+            _positionOffset = position;
+            _rotationOffset = Quaternion.Euler(rotation);
+            _scaleOffset = scale;
+        }
+
+        public Vector3 Position => Cue.Position + _positionOffset;
+        public Quaternion Rotation => Cue.Rotation * _rotationOffset;
+        public Vector3 Scale => Cue.Scale.Multiply(_scaleOffset);
 
         /// <summary>
         /// Cue 를 재생합니다. 

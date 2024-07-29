@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StudioScor.Utilities;
+using UnityEngine;
 namespace StudioScor.GameplayCueSystem
 {
 
@@ -40,14 +41,14 @@ namespace StudioScor.GameplayCueSystem
 
             if(Cue.UseStayWorldPosition)
             {
-                transform.SetPositionAndRotation(Cue.Position, Cue.Rotation);
+                transform.SetPositionAndRotation( Position, Rotation);
             }
             else
             {
-                transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+                transform.SetLocalPositionAndRotation(Position, Rotation);
             }
-            
-            transform.localScale = Cue.Scale;
+
+            transform.localScale = Scale;
 
             if (!particle.main.playOnAwake)
                 particle.Play();

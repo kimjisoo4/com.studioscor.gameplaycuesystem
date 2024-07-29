@@ -31,16 +31,20 @@ namespace StudioScor.GameplayCueSystem
 
             transform.SetParent(Cue.AttachTarget);
 
+            Vector3 position = Position;
+            Quaternion rotation = Rotation;
+            Vector3 scale = Scale;
+
             if (Cue.UseStayWorldPosition)
             {
-                transform.SetPositionAndRotation(Cue.Position, Cue.Rotation);
+                transform.SetPositionAndRotation(position, rotation);
             }
             else
             {
-                transform.SetLocalPositionAndRotation(Cue.Position, Cue.Rotation);
+                transform.SetLocalPositionAndRotation(position, rotation);
             }
 
-            trailRenderer.widthMultiplier = Cue.Scale.x;
+            trailRenderer.widthMultiplier = scale.x;
             trailRenderer.Clear();
         }
 

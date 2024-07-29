@@ -1,15 +1,23 @@
-﻿using UnityEngine;
-using StudioScor.Utilities;
+﻿using StudioScor.Utilities;
+using UnityEngine;
 using UnityEngine.Pool;
-using System;
 
 namespace StudioScor.GameplayCueSystem
 {
     [CreateAssetMenu(menuName ="StudioScor/GameplayCue/new GameplayCue", fileName = "Cue_")]
     public class GameplayCue : BaseScriptableObject
     {
+        [System.Serializable]
+        public struct FCueFX
+        {
+            public CueFX Cue;
+            public Vector3 Position;
+            public Vector3 Rotation;
+            public Vector3 Scale;
+        }
+
         [Header(" [ Gameplay Que ] ")]
-        [SerializeField] private CueFX[] queFXs;
+        [SerializeField] private FCueFX[] _cueFXs;
 
         private ObjectPool<Cue> cuePool;
 
@@ -41,7 +49,7 @@ namespace StudioScor.GameplayCueSystem
         {
             Log(" Create New Cue ");
 
-            return new Cue(cuePool);
+            return new Cue(this);
         }
 
         public void Initialization()
@@ -51,9 +59,10 @@ namespace StudioScor.GameplayCueSystem
             if (cuePool is null)
                 CreatePool();
 
-            foreach (var queFX in queFXs)
+            
+            foreach (var queFX in _cueFXs)
             {
-                queFX.Initialization();
+                queFX.Cue.Initialization();
             }
         }
 
@@ -61,12 +70,21 @@ namespace StudioScor.GameplayCueSystem
         {
             var cue = CuePool.Get();
 
-            foreach (CueFX fX in queFXs)
+            foreach (FCueFX fx in _cueFXs)
             {
-                cue.Add(fX.GetCue());
+                var cueFX = fx.Cue.GetCue();
+
+                cueFX.SetOffset(fx.Position, fx.Rotation, fx.Scale);
+
+                cue.Add(cueFX);
             }
 
             return cue;
+        }
+
+        public void ReleaseCue(Cue cue)
+        {
+            CuePool.Release(cue);
         }
     }
 }
