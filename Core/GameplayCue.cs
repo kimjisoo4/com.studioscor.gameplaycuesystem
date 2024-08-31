@@ -13,22 +13,23 @@ namespace StudioScor.GameplayCueSystem
             public CueFX Cue;
             public Vector3 Position;
             public Vector3 Rotation;
-            public Vector3 Scale;
+            [Min(0)]public Vector3 Scale;
+            [Range(0f, 1f)]public float Volume;
         }
 
         [Header(" [ Gameplay Que ] ")]
         [SerializeField] private FCueFX[] _cueFXs;
 
-        private ObjectPool<Cue> cuePool;
+        private static ObjectPool<Cue> _cuePool;
 
         private ObjectPool<Cue> CuePool
         {
             get
             {
-                if (cuePool is null)
+                if (_cuePool is null)
                     CreatePool();
 
-                return cuePool;
+                return _cuePool;
             }
         }
 
@@ -36,29 +37,32 @@ namespace StudioScor.GameplayCueSystem
         {
             base.OnReset();
 
-            cuePool = null;
+            if(_cuePool is not null)
+            {
+                _cuePool.Clear();
+                _cuePool = null;
+            }
         }
         private void CreatePool()
         {
             Log(" Create Pool ");
 
-            cuePool = new ObjectPool<Cue>(Create);
+            _cuePool = new ObjectPool<Cue>(Create);
         }
 
         private Cue Create()
         {
-            Log(" Create New Cue ");
+            Log($"{nameof(Create)} :: All - {_cuePool.CountAll} || Active - {_cuePool.CountActive} || Inactive - {_cuePool.CountInactive}");
 
-            return new Cue(this);
+            return new Cue();
         }
 
         public void Initialization()
         {
             Log("Initialization GameplayCue");
 
-            if (cuePool is null)
+            if (_cuePool is null)
                 CreatePool();
-
             
             foreach (var queFX in _cueFXs)
             {
@@ -70,11 +74,13 @@ namespace StudioScor.GameplayCueSystem
         {
             var cue = CuePool.Get();
 
+            cue.Setup(this);
+
             foreach (FCueFX fx in _cueFXs)
             {
-                var cueFX = fx.Cue.GetCue();
+                var cueFX = fx.Cue.GetCueActor();
 
-                cueFX.SetOffset(fx.Position, fx.Rotation, fx.Scale);
+                cueFX.Setup(cue, fx.Position, fx.Rotation, fx.Scale, fx.Volume);
 
                 cue.Add(cueFX);
             }
@@ -85,6 +91,8 @@ namespace StudioScor.GameplayCueSystem
         public void ReleaseCue(Cue cue)
         {
             CuePool.Release(cue);
+
+            Log($"{nameof(ReleaseCue)} :: All - {_cuePool.CountAll} || Active - {_cuePool.CountActive} || Inactive - {_cuePool.CountInactive}");
         }
     }
 }

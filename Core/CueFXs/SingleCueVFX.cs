@@ -10,7 +10,7 @@ namespace StudioScor.GameplayCueSystem
 
         private GameplayCueComponent instanceCue;
 
-        public override GameplayCueComponent GetCue()
+        public override ICueActor GetCueActor()
         {
             if(!instanceCue)
                 instanceCue = Instantiate(cue);

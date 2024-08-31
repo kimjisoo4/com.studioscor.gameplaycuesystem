@@ -31,13 +31,13 @@ namespace StudioScor.GameplayCueSystem.Extend
 
 
             Vector3 rotation = Quaternion.LookRotation(direction, Vector3.up).eulerAngles + gameplayCue.Rotation;
-
             Vector3 scale = gameplayCue.Scale;
+            float volume = _gameplayCue.Volume;
 
             if (isAttached)
-                gameplayCue.Cue.PlayAttached(target, position, rotation, scale, true);
+                gameplayCue.Cue.PlayAttached(target, position, rotation, scale, volume , true);
             else
-                gameplayCue.Cue.Play(position, rotation, scale);
+                gameplayCue.Cue.Play(position, rotation, scale, volume);
         }
 
         public override ITraceTaskAction Clone()

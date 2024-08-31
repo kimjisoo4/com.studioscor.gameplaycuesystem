@@ -1,4 +1,5 @@
 ﻿using StudioScor.Utilities;
+using System.Linq;
 using UnityEngine;
 namespace StudioScor.GameplayCueSystem
 {
@@ -7,12 +8,12 @@ namespace StudioScor.GameplayCueSystem
     public class ParticleCueComponent : GameplayCueComponent
     {
         [Header(" [ Particle Cue ] ")]
-        [SerializeField] private ParticleSystem particle;
+        [SerializeField] private ParticleSystem[] _particles;
 
         private void Reset()
         {
 #if UNITY_EDITOR
-            particle = GetComponentInChildren<ParticleSystem>();
+            _particles = GetComponentsInChildren<ParticleSystem>();
 #endif
         }
 
@@ -23,16 +24,22 @@ namespace StudioScor.GameplayCueSystem
 
         public override void Pause()
         {
-            var main = particle.main;
+            foreach (var particle in _particles)
+            {
+                var main = particle.main;
 
-            main.simulationSpeed = 0f;
+                main.simulationSpeed = 0f;
+            }
         }
 
         public override void Resume()
         {
-            var main = particle.main;
+            foreach (var particle in _particles)
+            {
+                var main = particle.main;
 
-            main.simulationSpeed = 1f;
+                main.simulationSpeed = 1f;
+            }
         }
         public override void Play()
         {
@@ -50,13 +57,16 @@ namespace StudioScor.GameplayCueSystem
 
             transform.localScale = Scale;
 
-            if (!particle.main.playOnAwake)
-                particle.Play();
+            if (!_particles[0].main.playOnAwake)
+                _particles[0].Play();
         }
 
         public override void Stop()
         {
-            particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            foreach (var particle in _particles)
+            {
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
         }
     }
 }

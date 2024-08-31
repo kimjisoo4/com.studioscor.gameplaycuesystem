@@ -16,6 +16,8 @@ namespace StudioScor.GameplayCueSystem
         [SerializeField][SCondition(nameof(_useLegacy))] private float _impactPointRatio = 1f;
         [SerializeField][SCondition(nameof(_useLegacy))] private float _dissipationDistanceRatio = 100f;
 
+        private float _remainTime = 0f;
+
 
         private void OnValidate()
         {
@@ -48,11 +50,15 @@ namespace StudioScor.GameplayCueSystem
             }
             else
             {
-                _cinemachineImpulseSource.m_ImpulseDefinition.m_ImpulseDuration = cueScale * _durataion;
+                _remainTime = cueScale * _durataion;
+                _cinemachineImpulseSource.m_ImpulseDefinition.m_ImpulseDuration = _remainTime;
             }
 
             _cinemachineImpulseSource.GenerateImpulseAtPositionWithVelocity(position, velocity);
+
+            Finish();
         }
+
 
         public override void Resume()
         {

@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using StudioScor.Utilities;
+﻿using StudioScor.Utilities;
 
 namespace StudioScor.GameplayCueSystem
 {
@@ -13,6 +9,6 @@ namespace StudioScor.GameplayCueSystem
             Log("Initialization");
         }
 
-        public abstract GameplayCueComponent GetCue();
+        public abstract ICueActor GetCueActor();
     }
 }

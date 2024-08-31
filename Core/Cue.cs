@@ -8,8 +8,9 @@ namespace StudioScor.GameplayCueSystem
     {
         public delegate void CueStateHandler(Cue cue);
 
-        private readonly List<GameplayCueComponent> _instanceCues = new();
-        public readonly GameplayCue GameplayCue;
+        public GameplayCue GameplayCue;
+
+        private readonly List<ICueActor> _instanceCues = new();
 
         public Transform AttachTarget { get; set; }
         public Transform StartTarget { get; set; }
@@ -17,6 +18,7 @@ namespace StudioScor.GameplayCueSystem
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Scale { get; set; }
+        public float Volume { get; set; }
         public Vector3 EndPosition { get; set; }
         public float Duration { get; set; }
         public bool IsPlaying { get; private set; }
@@ -33,11 +35,12 @@ namespace StudioScor.GameplayCueSystem
         public override bool UseDebug => GameplayCue.UseDebug;
         public override Object Context => GameplayCue;
 
-        public Cue(GameplayCue gameplayCue)
+        public override string ToString()
         {
-            GameplayCue = gameplayCue;
+            return $"{GameplayCue} - Cue (Position {Position} || Rotation {Rotation} || Scale {Scale} || Attach Target {AttachTarget})";
         }
-
+        public Cue() { }
+        
         public void Clear()
         {
             _instanceCues.Clear();
@@ -63,6 +66,7 @@ namespace StudioScor.GameplayCueSystem
             Position = default;
             Rotation = default;
             Scale = Vector3.one;
+            Volume = 1f;
 
             EndPosition = default;
             Duration = default;
@@ -80,14 +84,17 @@ namespace StudioScor.GameplayCueSystem
             GameplayCue.ReleaseCue(this);
         }
 
-        public void Add(GameplayCueComponent cueComponent)
+        public void Setup(GameplayCue gameplayCue)
         {
-            cueComponent.Cue = this;
+            GameplayCue = gameplayCue;
+        }
 
+        public void Add(ICueActor cueComponent)
+        {
             _instanceCues.Add(cueComponent);
         }
 
-        public void Remove(GameplayCueComponent cueComponent)
+        public void Remove(ICueActor cueComponent)
         {
             if (_instanceCues.Remove(cueComponent))
             {
@@ -105,8 +112,10 @@ namespace StudioScor.GameplayCueSystem
 
             IsPlaying = true;
 
-            foreach (var cue in _instanceCues)
+            for(int i = _instanceCues.LastIndex(); i >= 0; i--)
             {
+                var cue = _instanceCues[i];
+
                 if (AttachTarget)
                     cue.transform.parent = AttachTarget;
 
@@ -148,6 +157,8 @@ namespace StudioScor.GameplayCueSystem
         {
             if (!IsPlaying || IsStopped)
                 return;
+
+            Resume();
 
             IsStopped = true;
 

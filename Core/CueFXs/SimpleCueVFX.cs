@@ -9,7 +9,7 @@ namespace StudioScor.GameplayCueSystem
         [Header(" [ Simple Cue VFX ] ")]
         [SerializeField] private GameplayCueComponent cue;
 
-        public override GameplayCueComponent GetCue()
+        public override ICueActor GetCueActor()
         {
             return Instantiate(cue);
         }

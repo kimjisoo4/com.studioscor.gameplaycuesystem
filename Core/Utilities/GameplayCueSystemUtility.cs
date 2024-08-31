@@ -12,18 +12,20 @@ namespace StudioScor.GameplayCueSystem
             cue.Position = gameplayCue.Position;
             cue.Rotation = Quaternion.Euler(gameplayCue.Rotation);
             cue.Scale = gameplayCue.Scale;
+            cue.Volume = gameplayCue.Volume;
 
             cue.Play();
 
             return cue;
         }
-        public static Cue Play(this GameplayCue gameplayCue, Vector3 position = default, Vector3 rotation = default, Vector3 scale = default)
+        public static Cue Play(this GameplayCue gameplayCue, Vector3 position, Vector3 rotation, Vector3 scale, float volume)
         {
             var cue = gameplayCue.GetCue();
 
             cue.Position = position;
             cue.Rotation = Quaternion.Euler(rotation);
             cue.Scale = scale;
+            cue.Volume = volume;
 
             cue.Play();
 
@@ -46,6 +48,7 @@ namespace StudioScor.GameplayCueSystem
             cue.Position = position;
             cue.Rotation = rotation;
             cue.Scale = scale;
+            cue.Volume = gameplayCue.Volume;
 
             cue.Play();
 
@@ -61,7 +64,7 @@ namespace StudioScor.GameplayCueSystem
         /// <param name="rotation"> Rotation Offset </param>
         /// <param name="scale"> new Scale </param>
         /// <returns></returns>
-        public static Cue PlayFromTarget(this GameplayCue gameplayCue, Transform transformSpace, Vector3 position = default, Vector3 rotation = default, Vector3 scale = default)
+        public static Cue PlayFromTarget(this GameplayCue gameplayCue, Transform transformSpace, Vector3 position, Vector3 rotation, Vector3 scale, float volume)
         {
             position = position == default ? transformSpace.position : transformSpace.TransformPoint(position);
             Quaternion cueRotation = rotation == default ? transformSpace.rotation : transformSpace.rotation * Quaternion.Euler(rotation);
@@ -72,6 +75,7 @@ namespace StudioScor.GameplayCueSystem
             cue.Position = position;
             cue.Rotation = cueRotation;
             cue.Scale = cueScale;
+            cue.Volume = volume;
 
             cue.Play();
 
@@ -100,6 +104,7 @@ namespace StudioScor.GameplayCueSystem
             cue.Position = position;
             cue.Rotation = rotation;
             cue.Scale = scale;
+            cue.Volume = gameplayCue.Volume;
 
             cue.Play();
 
@@ -115,7 +120,7 @@ namespace StudioScor.GameplayCueSystem
         /// <param name="rotation"> Rotation Offset </param>
         /// <param name="scale"> new Scale </param>
         /// <returns></returns>
-        public static Cue PlayFromCollider(this GameplayCue gameplayCue, Collider collider, Vector3 position = default, Vector3 rotation = default, float scale = 1f)
+        public static Cue PlayFromCollider(this GameplayCue gameplayCue, Collider collider, Vector3 position, Vector3 rotation, float scale, float volume)
         {
             Transform transform = collider.transform;
             Vector3 center = collider.bounds.center;
@@ -129,6 +134,7 @@ namespace StudioScor.GameplayCueSystem
             cue.Position = position;
             cue.Rotation = queRotation;
             cue.Scale = queScale;
+            cue.Volume = volume;
 
             cue.Play();
 
@@ -154,6 +160,8 @@ namespace StudioScor.GameplayCueSystem
             cue.Rotation = rotation;
             cue.Scale = scale;
             cue.UseStayWorldPosition = useStayWorldPosition;
+            cue.Volume = gameplayCue.Volume;
+
             cue.Play();
 
             return cue;
@@ -168,7 +176,7 @@ namespace StudioScor.GameplayCueSystem
         /// <param name="eulerRotation"> Rotation Offset </param>
         /// <param name="scale"> new Scale </param>
         /// <returns></returns>
-        public static Cue PlayAttached(this GameplayCue gameplayCue, Transform attachTarget, Vector3 position = default, Vector3 eulerRotation = default, Vector3 scale = default, bool useStayWorldPosition = false)
+        public static Cue PlayAttached(this GameplayCue gameplayCue, Transform attachTarget, Vector3 position, Vector3 eulerRotation, Vector3 scale, float volume, bool useStayWorldPosition = false)
         {
             Quaternion quaRotation = eulerRotation == default ? Quaternion.identity : Quaternion.Euler(eulerRotation);
 
@@ -180,6 +188,7 @@ namespace StudioScor.GameplayCueSystem
             cue.Rotation = quaRotation;
             cue.Scale = scale;
             cue.UseStayWorldPosition = useStayWorldPosition;
+            cue.Volume = volume;
 
             cue.Play();
 

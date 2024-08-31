@@ -8,13 +8,7 @@ namespace StudioScor.GameplayCueSystem
     {
         [Header(" [ Sound Que Component ] ")]
         [SerializeField] private AudioSource audioSource;
-        
-        private float defaultVolume = 0f;
 
-        private void Awake()
-        {
-            defaultVolume = audioSource.volume;
-        }
         private void OnDisable()
         {
             Finish();
@@ -30,20 +24,16 @@ namespace StudioScor.GameplayCueSystem
             if (Cue.AttachTarget)
                 transform.SetParent(Cue.AttachTarget);
 
-            Vector3 position = Position;
-            Quaternion rotation = Rotation;
-            Vector3 scale = Scale;
-
             if (Cue.UseStayWorldPosition)
             {
-                transform.SetPositionAndRotation(position, rotation);
+                transform.SetPositionAndRotation(Position, Rotation);
             }
             else
             {
-                transform.SetLocalPositionAndRotation(position, rotation);
+                transform.SetLocalPositionAndRotation(Position, Rotation);
             }
 
-            audioSource.volume = defaultVolume * scale.x;
+            audioSource.volume = Volume;
 
             audioSource.Play();
         }

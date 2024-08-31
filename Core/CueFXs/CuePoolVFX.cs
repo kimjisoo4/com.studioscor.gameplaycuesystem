@@ -34,7 +34,7 @@ namespace StudioScor.GameplayCueSystem.Utilities
 
         private void CreatePool()
         {
-            var container = new GameObject(name);
+            var container = new GameObject($"[Pool] {name}");
 
             this.container = container.transform;
 
@@ -50,7 +50,7 @@ namespace StudioScor.GameplayCueSystem.Utilities
         }
 
 
-        public override GameplayCueComponent GetCue()
+        public override ICueActor GetCueActor()
         {
             return GetItem.GetComponent<GameplayCueComponent>();
         }
