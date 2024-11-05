@@ -7,20 +7,20 @@ namespace StudioScor.GameplayCueSystem.Utilities
     public class CuePoolVFX : CueFX
     {
         [Header(" [ Cue Pool VFX ] ")]
-        [SerializeField] private SimplePooledObject pooled;
-        [SerializeField] private int startSize = 5;
+        [SerializeField] private PooledObject _pooled;
+        [SerializeField] private int _startSize = 5;
 
-        private SimplePool pool;
-        private Transform container;
+        private SimplePool _pool;
+        private Transform _container;
 
-        public SimplePooledObject GetItem
+        public PooledObject GetItem
         {
             get
             {
-                if (!container)
+                if (!_container)
                     CreatePool();
 
-                return pool.Get();
+                return _pool.Get();
             }
         }
 
@@ -28,24 +28,24 @@ namespace StudioScor.GameplayCueSystem.Utilities
         {
             base.OnReset();
 
-            pool = null;
-            container = null;
+            _pool = null;
+            _container = null;
         }
 
         private void CreatePool()
         {
             var container = new GameObject($"[Pool] {name}");
 
-            this.container = container.transform;
+            this._container = container.transform;
 
-            pool = new(pooled, this.container, startSize);
+            _pool = new(_pooled, this._container, _startSize);
         }
 
         public override void Initialization()
         {
             base.Initialization();
 
-            if (!container)
+            if (!_container)
                 CreatePool();
         }
 
