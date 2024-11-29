@@ -39,6 +39,9 @@ namespace StudioScor.GameplayCueSystem
         /// <returns></returns>
         public static Cue PlayFromTarget(this FGameplayCue gameplayCue, Transform transformSpace)
         {
+            if (!gameplayCue.Cue)
+                return null;
+
             Vector3 position = gameplayCue.Position == default ? transformSpace.position : transformSpace.TransformPoint(gameplayCue.Position);
             Quaternion rotation = gameplayCue.Rotation == default ? transformSpace.rotation : transformSpace.rotation * Quaternion.Euler(gameplayCue.Rotation);
             Vector3 scale = gameplayCue.Scale == default ? transformSpace.localScale : gameplayCue.Scale;
@@ -92,6 +95,9 @@ namespace StudioScor.GameplayCueSystem
         /// <returns></returns>
         public static Cue PlayFromCollider(this FGameplayCue gameplayCue, Collider collider)
         {
+            if (!gameplayCue.Cue)
+                return null;
+
             Transform transform = collider.transform;
             Vector3 center = collider.bounds.center;
 
@@ -149,6 +155,9 @@ namespace StudioScor.GameplayCueSystem
         /// <returns></returns>
         public static Cue PlayAttached(this FGameplayCue gameplayCue, Transform attachTarget, bool useStayWorldPosition = false)
         {
+            if (!gameplayCue.Cue)
+                return null;
+
             Quaternion rotation = gameplayCue.Rotation == default ? Quaternion.identity : Quaternion.Euler(gameplayCue.Rotation);
             Vector3 scale = gameplayCue.Scale;
 
@@ -194,10 +203,5 @@ namespace StudioScor.GameplayCueSystem
 
             return cue;
         }
-
-
-
-
-        
     }
 }

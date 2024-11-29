@@ -21,6 +21,12 @@ namespace StudioScor.GameplayCueSystem
             Scale = scale;
             Volume = volume;
         }
+
+        public readonly void Initialization()
+        {
+            if (Cue)
+                Cue.Initialization();
+        }
     }
 
 }
